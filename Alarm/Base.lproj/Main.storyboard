@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -18,15 +19,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="alarmCell" id="syq-bD-xDz" customClass="SwitchTableViewCell" customModule="Alarm" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="alarmCell" rowHeight="54" id="syq-bD-xDz" customClass="SwitchTableViewCell" customModule="Alarm" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="54"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="syq-bD-xDz" id="SKh-H2-1UJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="53.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JOa-e3-CMg">
-                                            <rect key="frame" x="8" y="0.0" width="359" height="40"/>
+                                            <rect key="frame" x="8" y="7" width="359" height="40"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Tu6-ss-LvD">
                                                     <rect key="frame" x="0.0" y="0.0" width="310" height="40"/>
@@ -39,14 +40,14 @@
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vc4-aB-OWo">
                                                             <rect key="frame" x="0.0" y="28" width="310" height="12"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="12" id="zo9-Eb-vl7"/>
-                                                            </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="bottom" secondItem="1WS-K4-JCe" secondAttribute="bottom" constant="20" symbolic="YES" id="uY5-Jz-e1w"/>
+                                                    </constraints>
                                                 </stackView>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RaQ-fA-Q3b">
                                                     <rect key="frame" x="310" y="0.0" width="51" height="40"/>
@@ -55,16 +56,13 @@
                                                     </connections>
                                                 </switch>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="40" id="zGK-MR-xma"/>
-                                            </constraints>
                                         </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="JOa-e3-CMg" firstAttribute="top" secondItem="SKh-H2-1UJ" secondAttribute="top" id="1ag-bH-lls"/>
-                                        <constraint firstItem="JOa-e3-CMg" firstAttribute="leading" secondItem="SKh-H2-1UJ" secondAttribute="leading" constant="8" id="M5i-pT-Ue1"/>
-                                        <constraint firstItem="JOa-e3-CMg" firstAttribute="centerX" secondItem="SKh-H2-1UJ" secondAttribute="centerX" id="lpO-Dy-MlC"/>
-                                        <constraint firstAttribute="trailing" secondItem="JOa-e3-CMg" secondAttribute="trailing" constant="8" id="t6P-cY-5js"/>
+                                        <constraint firstItem="JOa-e3-CMg" firstAttribute="centerX" secondItem="SKh-H2-1UJ" secondAttribute="centerX" id="1Zs-5H-P1W"/>
+                                        <constraint firstItem="JOa-e3-CMg" firstAttribute="centerY" secondItem="SKh-H2-1UJ" secondAttribute="centerY" id="RgU-Lv-a6P"/>
+                                        <constraint firstItem="JOa-e3-CMg" firstAttribute="leading" secondItem="SKh-H2-1UJ" secondAttribute="leadingMargin" constant="-8" id="fZF-LM-Trb"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="JOa-e3-CMg" secondAttribute="bottom" constant="-4" id="twS-XL-oRU"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -90,7 +88,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S19-eE-HWC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="193" y="84"/>
+            <point key="canvasLocation" x="192.80000000000001" y="83.208395802098963"/>
         </scene>
         <!--Add Alarm-->
         <scene sceneID="d7j-Rq-9fP">

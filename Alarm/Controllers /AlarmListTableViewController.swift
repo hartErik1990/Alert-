@@ -22,6 +22,9 @@ class AlarmListTableViewController: UITableViewController, SwitchTableViewCellDe
         tableView.reloadRows(at: [indexPath], with: .automatic)
 
     }
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
 
     // MARK: - Table view data source
 
@@ -43,7 +46,7 @@ class AlarmListTableViewController: UITableViewController, SwitchTableViewCellDe
         if editingStyle == .delete {
             let alarm = AlarmController.sharedAlarm.alarms[indexPath.row]
             AlarmController.sharedAlarm.delete(alarm: alarm)
-            tableView.reloadRows(at: [indexPath], with: .fade)
+            tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
 
@@ -52,8 +55,8 @@ class AlarmListTableViewController: UITableViewController, SwitchTableViewCellDe
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toAlarmDetailVC" {
             guard let toAlarmDetailVC = segue.destination as? AlarmDetailTableViewController, let indexPath = tableView.indexPathForSelectedRow else { return }
-            toAlarmDetailVC.alarm = AlarmController.sharedAlarm.alarms[indexPath.row]
-
+            let alarm = AlarmController.sharedAlarm.alarms[indexPath.row]
+            toAlarmDetailVC.alarm = alarm
         }
     }
 }

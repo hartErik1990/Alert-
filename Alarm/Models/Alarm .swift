@@ -8,8 +8,6 @@
 
 import Foundation
 
-import Foundation
-
 class Alarm: NSObject, NSCoding {
     private let FireTimeFromMidnightKey = "fireTimeFromMidnight"
     private let NameKey = "name"

@@ -9,7 +9,8 @@
 import UIKit
 
 protocol SwitchTableViewCellDelegate: class {
-   func switchCellSwitchValueChanged(cell: SwitchTableViewCell)
+  
+    func switchCellSwitchValueChanged(cell: SwitchTableViewCell)
 }
 
 class SwitchTableViewCell: UITableViewCell {
