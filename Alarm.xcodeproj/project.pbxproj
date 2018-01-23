@@ -49,7 +49,6 @@
 			isa = PBXGroup;
 			children = (
 				44A6CE70201447BC008316C4 /* Alarm */,
-				44A6CE93201455EF008316C4 /* Resources */,
 				44A6CE6F201447BC008316C4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -71,6 +70,7 @@
 				44A6CE92201455D9008316C4 /* Views */,
 				44A6CE8F20145586008316C4 /* Controllers  */,
 				44A6CE91201455BB008316C4 /* ModelControllers */,
+				44A6CE93201455EF008316C4 /* Resources */,
 				44A6CE902014559F008316C4 /* Models */,
 			);
 			path = Alarm;

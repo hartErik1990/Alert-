@@ -54,8 +54,6 @@ class AlarmDetailTableViewController: UITableViewController, AlarmScheduler {
             enableButton.backgroundColor = .white
             
         }
-        
-        
     }
  
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
