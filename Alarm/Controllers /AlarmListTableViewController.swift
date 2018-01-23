@@ -7,23 +7,26 @@
 //
 
 import UIKit
+import UserNotifications
 
-class AlarmListTableViewController: UITableViewController, SwitchTableViewCellDelegate {
+class AlarmListTableViewController: UITableViewController, SwitchTableViewCellDelegate, AlarmScheduler {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
     }
     // toggle the alarm
-    func switchCellSwitchValueChanged(cell: SwitchTableViewCell) {
+    func switchCellValueChanged(cell: SwitchTableViewCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         let alarm = AlarmController.sharedAlarm.alarms[indexPath.row]
-        AlarmController.sharedAlarm.toggleEnabled(for: alarm)
+        if alarm.enabled == true {
+            scheduleUserNotifications(for: alarm)
+        } else {
+            scheduleUserNotifications(for: alarm)
+        }
+        
         tableView.reloadRows(at: [indexPath], with: .automatic)
 
-    }
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
     }
 
     // MARK: - Table view data source
@@ -46,6 +49,7 @@ class AlarmListTableViewController: UITableViewController, SwitchTableViewCellDe
         if editingStyle == .delete {
             let alarm = AlarmController.sharedAlarm.alarms[indexPath.row]
             AlarmController.sharedAlarm.delete(alarm: alarm)
+            cancelUserNotifications(for: alarm)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }

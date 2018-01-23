@@ -9,8 +9,7 @@
 import UIKit
 
 protocol SwitchTableViewCellDelegate: class {
-  
-    func switchCellSwitchValueChanged(cell: SwitchTableViewCell)
+    func switchCellValueChanged(cell: SwitchTableViewCell)
 }
 
 class SwitchTableViewCell: UITableViewCell {
@@ -43,7 +42,7 @@ class SwitchTableViewCell: UITableViewCell {
     }
    
     @IBAction func alarmValueChanged(_ sender: Any) {
-        delegate?.switchCellSwitchValueChanged(cell: self)
+        delegate?.switchCellValueChanged(cell: self)
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UserNotifications
 
 class AlarmController {
     
@@ -15,24 +16,25 @@ class AlarmController {
     var alarms = [Alarm]()
     
     init() {
-        //loadFromPersistentStorage()
+        loadFromPersistentStorage()
     }
     
-    func addAlarm(fireTimeFromMidnight: TimeInterval, name: String) {
+    func addAlarm(fireTimeFromMidnight: TimeInterval, name: String) -> Alarm {
         let newAlarm = Alarm(fireTimeFromMidnight: fireTimeFromMidnight, name: name)
         alarms.append(newAlarm)
-       // saveToPersistentStorage()
+        saveToPersistentStorage()
+        return newAlarm
         
     }
     func update(alarm: Alarm, fireTimeFromMidnight: TimeInterval, name: String) {
         alarm.fireTimeFromMidnight = fireTimeFromMidnight
         alarm.name = name
-       // saveToPersistentStorage()
+        saveToPersistentStorage()
     }
     func delete(alarm: Alarm) {
         guard let alarm = alarms.index(of: alarm) else { return }
         alarms.remove(at: alarm)
-        //saveToPersistentStorage()
+        saveToPersistentStorage()
     }
     
 //    init() {
@@ -65,10 +67,32 @@ class AlarmController {
 }
 
 protocol AlarmScheduler {
-    func nscheduleUserNotifications(for alarm: Alarm)
+    func scheduleUserNotifications(for alarm: Alarm)
     func cancelUserNotifications(for alarm: Alarm)
 }
 extension AlarmScheduler {
+    
+    func scheduleUserNotifications(for alarm: Alarm) {
+    let notificationContent = UNMutableNotificationContent()
+    notificationContent.title = "Time's up!"
+    notificationContent.body = "Your alarm titled \(alarm.name) is done"
+    notificationContent.sound = UNNotificationSound.default()
+    
+    guard let fireDate = alarm.fireDate else { return }
+    let triggerDate = Calendar.current.dateComponents([.hour, .minute, .second], from: fireDate)
+    let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: true)
+    
+    let request = UNNotificationRequest(identifier: alarm.uuid, content: notificationContent, trigger: trigger)
+    UNUserNotificationCenter.current().add(request) { (error) in
+    if let error = error {
+    print("Unable to add notification request, \(error.localizedDescription)")
+    }
+    }
+}
+
+func cancelUserNotifications(for alarm: Alarm) {
+    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [alarm.uuid])
+}
     
 }
 

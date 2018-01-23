@@ -8,8 +8,8 @@
 
 import UIKit
 
-class AlarmDetailTableViewController: UITableViewController {
-
+class AlarmDetailTableViewController: UITableViewController, AlarmScheduler {
+    
    var alarm: Alarm? {
         didSet {
             if isViewLoaded {
@@ -47,10 +47,12 @@ class AlarmDetailTableViewController: UITableViewController {
             enableButton.setTitle("Disable", for: UIControlState())
             enableButton.setTitleColor( .white, for: UIControlState())
             enableButton.backgroundColor = .red
+            
         } else {
             enableButton.setTitle("Enable", for: UIControlState())
             enableButton.setTitleColor(.blue, for: UIControlState())
             enableButton.backgroundColor = .white
+            
         }
         
         
@@ -61,8 +63,13 @@ class AlarmDetailTableViewController: UITableViewController {
         let timeSinceMidnight = datePickerLabel.date.timeIntervalSince(thisMorningAtMidnight)
         if let alarm = alarm {
             AlarmController.sharedAlarm.update(alarm: alarm, fireTimeFromMidnight: timeSinceMidnight, name: title)
+            cancelUserNotifications(for: alarm)
+            scheduleUserNotifications(for: alarm)
         } else {
-            AlarmController.sharedAlarm.addAlarm(fireTimeFromMidnight: timeSinceMidnight, name: title)
+           let alarm = AlarmController.sharedAlarm.addAlarm(fireTimeFromMidnight: timeSinceMidnight, name: title)
+            self.alarm = alarm
+            scheduleUserNotifications(for: alarm)
+            
         }
         navigationController?.popViewController(animated: true)
     }
@@ -71,6 +78,12 @@ class AlarmDetailTableViewController: UITableViewController {
     @IBAction func enableButtonTapped(_ sender: UIButton) {
         guard let alarm = alarm else { return }
         AlarmController.sharedAlarm.toggleEnabled(for: alarm)
+        enableButton.isHidden = false
+        if alarm.enabled {
+            scheduleUserNotifications(for: alarm)
+        } else {
+            cancelUserNotifications(for: alarm)
+        }
         enableButton.adjustsImageWhenHighlighted = true
         updateViews()
     }
