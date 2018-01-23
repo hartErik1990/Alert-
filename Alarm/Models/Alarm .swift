@@ -73,6 +73,7 @@ class Alarm: NSObject, NSCoding {
     }
 }
 
+
 // MARK: - Equatable
 func ==(lhs: Alarm, rhs: Alarm) -> Bool {
     return lhs.uuid == rhs.uuid

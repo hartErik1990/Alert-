@@ -26,7 +26,6 @@ class AlarmListTableViewController: UITableViewController, SwitchTableViewCellDe
         }
         
         tableView.reloadRows(at: [indexPath], with: .automatic)
-
     }
 
     // MARK: - Table view data source
