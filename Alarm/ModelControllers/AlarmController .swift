@@ -46,18 +46,19 @@ class AlarmController {
      // MARK: - Data Persistence
     
     private static var persistentAlarmsFilePath: String? {
-        let directories = NSSearchPathForDirectoriesInDomains(.documentDirectory, .allDomainsMask, true)
-        guard let documentsDirectory = directories.first as NSString? else { return nil }
-        return documentsDirectory.appendingPathComponent("Alarms.plist")
+        let directories = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+        guard let directoryPath = directories.first as NSString? else { return nil }
+        return directoryPath.appendingPathComponent("Alarm.plist")
     }
-    func saveToPersistentStorage() {
+    private func saveToPersistentStorage() {
         guard let filePath = type(of: self).persistentAlarmsFilePath else { return }
         NSKeyedArchiver.archiveRootObject(self.alarms, toFile: filePath)
     }
-    func loadFromPersistentStorage() {
+    private func loadFromPersistentStorage() {
         guard let filePath = type(of: self).persistentAlarmsFilePath else { return }
         guard let alarms = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as? [Alarm] else { return }
         self.alarms = alarms
+        
     }
 
     func toggleEnabled(for alarm: Alarm) {
@@ -72,27 +73,26 @@ protocol AlarmScheduler {
 }
 extension AlarmScheduler {
     
+    var identifier: String { return "NotificationID"}
+    
     func scheduleUserNotifications(for alarm: Alarm) {
-    let notificationContent = UNMutableNotificationContent()
-    notificationContent.title = "Time's up!"
-    notificationContent.body = "Your alarm titled \(alarm.name) is done"
-    notificationContent.sound = UNNotificationSound.default()
-    
-    guard let fireDate = alarm.fireDate else { return }
-    let triggerDate = Calendar.current.dateComponents([.hour, .minute, .second], from: fireDate)
-    let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: true)
-    
-    let request = UNNotificationRequest(identifier: alarm.uuid, content: notificationContent, trigger: trigger)
-    UNUserNotificationCenter.current().add(request) { (error) in
-    if let error = error {
-    print("Unable to add notification request, \(error.localizedDescription)")
+        let notificationContent = UNMutableNotificationContent()
+        notificationContent.title = " Hey Time is up"
+        notificationContent.body = "get of the floor"
+        notificationContent.sound = UNNotificationSound.default()
+        
+        guard let fireDate = alarm.fireDate else { return }
+        let triggerDate = Calendar.current.dateComponents([.minute, .second], from: fireDate)
+        let trigger = UNCalendarNotificationTrigger.init(dateMatching: triggerDate, repeats: false)
+        
+        let request = UNNotificationRequest.init(identifier: identifier, content: notificationContent, trigger: trigger)
+        let center = UNUserNotificationCenter.current()
+        center.add(request, withCompletionHandler: nil)
     }
-    }
-}
 
-func cancelUserNotifications(for alarm: Alarm) {
-    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [alarm.uuid])
-}
+    func cancelUserNotifications(for alarm: Alarm) {
+        UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [alarm.uuid])
+    }
     
 }
 

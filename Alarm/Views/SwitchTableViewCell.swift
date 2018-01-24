@@ -39,6 +39,7 @@ class SwitchTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        // comment 
     }
    
     @IBAction func alarmValueChanged(_ sender: Any) {

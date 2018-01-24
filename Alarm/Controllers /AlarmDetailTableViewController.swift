@@ -82,7 +82,7 @@ class AlarmDetailTableViewController: UITableViewController, AlarmScheduler {
         } else {
             cancelUserNotifications(for: alarm)
         }
-        enableButton.adjustsImageWhenHighlighted = true
+        //enableButton.adjustsImageWhenHighlighted = true
         updateViews()
     }
 
